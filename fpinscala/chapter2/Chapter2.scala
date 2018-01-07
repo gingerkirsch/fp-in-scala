@@ -1,6 +1,6 @@
 object MyModule {
   def factorial(n: Int): Int = {
-    @annotation.tailrec  
+    @annotation.tailrec
     def go(n: Int = 0, acc: Int = 1): Int =
       if (n < 1) acc
       else go(n - 1, acc * n)
@@ -15,7 +15,7 @@ object MyModule {
     go(n)
   }
 
-  def abs(n: Int): Int = 
+  def abs(n: Int): Int =
     if (n < 0) -n
     else n
 
@@ -31,7 +31,7 @@ object MyModule {
 
   def findFirst[A](as: Array[A], p: A => Boolean): Int = {
     @annotation.tailrec
-    def loop(n: Int): Int = 
+    def loop(n: Int): Int =
       if (n >= as.length) -1
       else if (p(as(n))) n
       else loop(n + 1)
@@ -50,7 +50,7 @@ object MyModule {
   def curry[A,B,C](f: (A,B) => C): A => B => C =
     (a: A) => (b: B) => f(a,b)
 
-  def uncurry[A,B,C](f: A => B => C): (A,B) => C = 
+  def uncurry[A,B,C](f: A => B => C): (A,B) => C =
     (a: A, b: B) => f(a)(b)
 
   def compose[A,B,C](f: B => C, g: A => B): A => C =
