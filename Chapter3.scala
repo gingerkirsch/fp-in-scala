@@ -115,5 +115,14 @@ object List {
     case _ => Nil
   }
 
-  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = ???
+  def take[A](l: List[A], n: Int): List[A] = (n,l) match {
+    case (n, Nil) if n > 0  => throw new Exception("Not enough elements")
+    case (0, _) => Nil
+    case (n, _) => Cons(head(l), take(tail(l), n - 1))
+  }
+
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = lengthLeft(sub) match {
+    case n if (n > lengthLeft(sup)) => false
+    case _ => take(sup, length(sub)) == sub || hasSubsequence(tail(sup),sub)
+  }
 }
