@@ -20,6 +20,13 @@ sealed trait Either1[+E,+A]{
     case (_, Left1(e)) => Left1(e)
   }
 
+  def map2list[EE >: E, B, C](b: Either1[EE,B])(f: (A,B) => C): Either1[List[EE],C] = (this,b) match {
+    case (Right1(a), Right1(bb)) => Right1(f(a,bb))
+    case (Left1(e), Right1(v)) => Left1(List(e))
+    case (Right1(v), Left1(e)) => Left1(List(e))
+    case (Left1(e), Left1(ex)) => Left1(List(e, ex))
+  }
+
   def sequence[E,A](as: List[Either1[E,A]]): Either1[E, List[A]] =
     as.foldRight[Either1[E, List[A]]](Right1(Nil))((a,b) => a.map2(b)(_ :: _ ))
 
