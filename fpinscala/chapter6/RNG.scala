@@ -69,7 +69,11 @@ case class SimpleRNG(seed: Long) extends RNG {
     loop(count)
   }
 
-  type Rand[+A] = RNG => (A, RNG)
+  /* RNG => (A, RNG) - state actions / state transitions
+   * These states can be combined using combinators  */
+
+  type Rand[+A] = RNG => (A, RNG) // a state action - a program that depends on some RNG, uses it to generate an A, and
+                                  // also transitions the RNG to a new state that can be used by another action later.
 
   val int: Rand[Int] = _.nextInt
 
